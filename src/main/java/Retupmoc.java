@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -38,29 +39,33 @@ public class Retupmoc {
     }
 
     private static void processUserInput(String input) {
-        String[] command = input.trim().split("\\s+");
-        switch (command[0].toLowerCase()) {
+        String[] tokens = input.trim().split("\\s+");
+        switch (tokens[0].toLowerCase()) {
             case "list":
                 displayList();
                 break;
             case "mark":
-                markTaskDone(Integer.parseInt(command[1]) - 1);
+                markTaskDone(Integer.parseInt(tokens[1]) - 1);
                 break;
             case "unmark":
-                markTaskNotDone(Integer.parseInt(command[1]) - 1);
+                markTaskNotDone(Integer.parseInt(tokens[1]) - 1);
                 break;
             case "bye":
                 printGoodbye();
                 printHorizontalLine();
                 System.exit(0);
+            case "todo":
+                addToDo(tokens);
+                break;
+            case "deadline":
+                addDeadline(tokens);
+                break;
+            case "event":
+                addEvent(tokens);
+                break;
             default:
-                addToList(input);
+                System.out.println(input);
         }
-    }
-
-    private static void addToList(String description) {
-        list.add(new Task(description));
-        System.out.println("added: " + description);
     }
 
     private static void displayList() {
@@ -81,6 +86,31 @@ public class Retupmoc {
         task.markAsNotDone();
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(task);
+    }
+
+    private static void addToDo(String[] input) {
+        String description = String.join(" ", input);
+        addTask(new ToDo(description));
+    }
+
+    private static void addDeadline(String[] input) {
+        String description = String.join(" ", Arrays.stream(input).takeWhile(word -> !"/by".equals(word)).toList());
+        String by = String.join(" ", Arrays.stream(input).dropWhile(word -> !"/by".equals(word)).skip(1).toList());
+        addTask(new Deadline(description, by));
+    }
+
+    private static void addEvent(String[] input) {
+        String description = String.join(" ", Arrays.stream(input).takeWhile(word -> !"/from".equals(word)).toList());
+        String start = String.join(" ", Arrays.stream(input).dropWhile(word -> !"/from".equals(word)).skip(1).takeWhile(word -> !"/to".equals(word)).toList());
+        String end = String.join(" ", Arrays.stream(input).dropWhile(word -> !"/to".equals(word)).skip(1).toList());
+        addTask(new Event(description, start, end));
+    }
+
+    private static void addTask(Task task) {
+        list.add(task);
+        System.out.println("Got it. I've added this task:");
+        System.out.println(task);
+        System.out.println("Now you have " + list.size() + " tasks in the list.");
     }
 
 }
