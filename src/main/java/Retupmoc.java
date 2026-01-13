@@ -1,10 +1,20 @@
+import java.util.Scanner;
+
 public class Retupmoc {
+
+    private static final Scanner s = new Scanner(System.in);
+
     public static void main(String[] args) {
         printHorizontalLine();
         printGreeting();
         printHorizontalLine();
-        printGoodbye();
-        printHorizontalLine();
+
+        while (true) {
+            String input = getUserInput();
+            printHorizontalLine();
+            processUserInput(input);
+            printHorizontalLine();
+        }
     }
 
     private static void printGreeting() {
@@ -19,4 +29,21 @@ public class Retupmoc {
     private static void printGoodbye() {
         System.out.println(" Bye. Hope to see you again soon!");
     }
+
+    private static String getUserInput() {
+        return s.nextLine();
+    }
+
+    private static void processUserInput(String input) {
+        switch (input.toLowerCase()) {
+            case "bye":
+                printGoodbye();
+                printHorizontalLine();
+                System.exit(0);
+            default:
+                System.out.println(input);
+        }
+    }
+
+
 }
