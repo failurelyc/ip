@@ -16,7 +16,11 @@ public class Retupmoc {
         while (true) {
             String input = getUserInput();
             printHorizontalLine();
-            processUserInput(input);
+            try {
+                processUserInput(input);
+            } catch (RetupmocException e) {
+                System.out.println(e.getMessage());
+            }
             printHorizontalLine();
         }
     }
@@ -38,17 +42,17 @@ public class Retupmoc {
         return s.nextLine();
     }
 
-    private static void processUserInput(String input) {
+    private static void processUserInput(String input) throws RetupmocException {
         String[] tokens = input.trim().split("\\s+");
         switch (tokens[0].toLowerCase()) {
             case "list":
                 displayList();
                 break;
             case "mark":
-                markTaskDone(Integer.parseInt(tokens[1]) - 1);
+                markTaskDone(convertInputToTaskNo(tokens));
                 break;
             case "unmark":
-                markTaskNotDone(Integer.parseInt(tokens[1]) - 1);
+                markTaskNotDone(convertInputToTaskNo(tokens));
                 break;
             case "bye":
                 printGoodbye();
@@ -64,45 +68,68 @@ public class Retupmoc {
                 addEvent(tokens);
                 break;
             default:
-                System.out.println(input);
+                throw new RetupmocException("Unknown command: " + tokens[0]);
         }
     }
 
     private static void displayList() {
+        System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < list.size(); i++) {
             System.out.println((i + 1) + ". " + list.get(i));
         }
     }
 
-    private static void markTaskDone(int taskNo) {
-        Task task = list.get(taskNo);
+    private static int convertInputToTaskNo(String[] input) throws RetupmocException {
+        try {
+            return Integer.parseInt(input[1]) - 1;
+        } catch (NumberFormatException e) {
+            throw new RetupmocException("Invalid task number: " + input[1]);
+        }
+    }
+
+    private static Task findTask(int taskNo) throws RetupmocException {
+        try {
+            return list.get(taskNo);
+        } catch (IndexOutOfBoundsException e) {
+            throw new RetupmocException("Task not found");
+        }
+    }
+
+    private static void markTaskDone(int taskNo) throws RetupmocException {
+        Task task = findTask(taskNo);
         task.markAsDone();
         System.out.println("Nice! I've marked this task as done:");
         System.out.println(task);
     }
 
-    private static void markTaskNotDone(int taskNo) {
-        Task task = list.get(taskNo);
+    private static void markTaskNotDone(int taskNo) throws RetupmocException {
+        Task task = findTask(taskNo);
         task.markAsNotDone();
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(task);
     }
 
-    private static void addToDo(String[] input) {
-        String description = String.join(" ", input);
+    private static void addToDo(String[] input) throws RetupmocException {
+        String description = String.join(" ", Arrays.stream(input).skip(1).toList());
+        if (description.isEmpty())
+            throw new RetupmocException("The description of a Task cannot be empty");
         addTask(new ToDo(description));
     }
 
-    private static void addDeadline(String[] input) {
-        String description = String.join(" ", Arrays.stream(input).takeWhile(word -> !"/by".equals(word)).toList());
+    private static void addDeadline(String[] input) throws RetupmocException {
+        String description = String.join(" ", Arrays.stream(input).takeWhile(word -> !"/by".equals(word)).skip(1).toList());
         String by = String.join(" ", Arrays.stream(input).dropWhile(word -> !"/by".equals(word)).skip(1).toList());
+        if (description.isEmpty())
+            throw new RetupmocException("The description of a Task cannot be empty");
         addTask(new Deadline(description, by));
     }
 
-    private static void addEvent(String[] input) {
-        String description = String.join(" ", Arrays.stream(input).takeWhile(word -> !"/from".equals(word)).toList());
+    private static void addEvent(String[] input) throws RetupmocException {
+        String description = String.join(" ", Arrays.stream(input).takeWhile(word -> !"/from".equals(word)).skip(1).toList());
         String start = String.join(" ", Arrays.stream(input).dropWhile(word -> !"/from".equals(word)).skip(1).takeWhile(word -> !"/to".equals(word)).toList());
         String end = String.join(" ", Arrays.stream(input).dropWhile(word -> !"/to".equals(word)).skip(1).toList());
+        if (description.isEmpty())
+            throw new RetupmocException("The description of a Task cannot be empty");
         addTask(new Event(description, start, end));
     }
 

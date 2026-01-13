@@ -4,58 +4,62 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-[T][ ] todo read book
+[T][ ] read book
 Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-[D][ ] deadline return book (by: June 6th)
+[D][ ] return book (by: June 6th)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-[E][ ] event project meeting (from: Aug 6th 2pm to: 4pm)
+[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-1. [T][ ] todo read book
-2. [D][ ] deadline return book (by: June 6th)
-3. [E][ ] event project meeting (from: Aug 6th 2pm to: 4pm)
+Here are the tasks in your list:
+1. [T][ ] read book
+2. [D][ ] return book (by: June 6th)
+3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
 Nice! I've marked this task as done:
-[T][X] todo read book
+[T][X] read book
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-[T][ ] todo join sports club
+[T][ ] join sports club
 Now you have 4 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-1. [T][X] todo read book
-2. [D][ ] deadline return book (by: June 6th)
-3. [E][ ] event project meeting (from: Aug 6th 2pm to: 4pm)
-4. [T][ ] todo join sports club
+Here are the tasks in your list:
+1. [T][X] read book
+2. [D][ ] return book (by: June 6th)
+3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+4. [T][ ] join sports club
 ____________________________________________________________
 ____________________________________________________________
 Nice! I've marked this task as done:
-[T][X] todo join sports club
+[T][X] join sports club
 ____________________________________________________________
 ____________________________________________________________
-1. [T][X] todo read book
-2. [D][ ] deadline return book (by: June 6th)
-3. [E][ ] event project meeting (from: Aug 6th 2pm to: 4pm)
-4. [T][X] todo join sports club
+Here are the tasks in your list:
+1. [T][X] read book
+2. [D][ ] return book (by: June 6th)
+3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+4. [T][X] join sports club
 ____________________________________________________________
 ____________________________________________________________
 OK, I've marked this task as not done yet:
-[T][ ] todo join sports club
+[T][ ] join sports club
 ____________________________________________________________
 ____________________________________________________________
-1. [T][X] todo read book
-2. [D][ ] deadline return book (by: June 6th)
-3. [E][ ] event project meeting (from: Aug 6th 2pm to: 4pm)
-4. [T][ ] todo join sports club
+Here are the tasks in your list:
+1. [T][X] read book
+2. [D][ ] return book (by: June 6th)
+3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+4. [T][ ] join sports club
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!
