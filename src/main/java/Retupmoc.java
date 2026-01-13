@@ -1,8 +1,11 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Retupmoc {
 
     private static final Scanner s = new Scanner(System.in);
+    private static final List<String> list = new ArrayList<>();
 
     public static void main(String[] args) {
         printHorizontalLine();
@@ -36,14 +39,27 @@ public class Retupmoc {
 
     private static void processUserInput(String input) {
         switch (input.toLowerCase()) {
+            case "list":
+                displayList();
+                break;
             case "bye":
                 printGoodbye();
                 printHorizontalLine();
                 System.exit(0);
             default:
-                System.out.println(input);
+                addToList(input);
         }
     }
 
+    private static void addToList(String task) {
+        list.add(task);
+        System.out.println("added: " + task);
+    }
+
+    private static void displayList() {
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println((i + 1) + ". " + list.get(i));
+        }
+    }
 
 }
