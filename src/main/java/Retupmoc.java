@@ -67,6 +67,9 @@ public class Retupmoc {
             case "event":
                 addEvent(tokens);
                 break;
+            case "delete":
+                removeTask(convertInputToTaskNo(tokens));
+                break;
             default:
                 throw new RetupmocException("Unknown command: " + tokens[0]);
         }
@@ -90,6 +93,17 @@ public class Retupmoc {
     private static Task findTask(int taskNo) throws RetupmocException {
         try {
             return list.get(taskNo);
+        } catch (IndexOutOfBoundsException e) {
+            throw new RetupmocException("Task not found");
+        }
+    }
+
+    private static void removeTask(int taskNo) throws RetupmocException {
+        try {
+            Task task = list.remove(taskNo);
+            System.out.println("Noted: I've removed this task:");
+            System.out.println(task);
+            System.out.println("Now you have " + list.size() + " tasks in the list.");
         } catch (IndexOutOfBoundsException e) {
             throw new RetupmocException("Task not found");
         }
