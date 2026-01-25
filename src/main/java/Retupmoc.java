@@ -1,3 +1,8 @@
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,11 +12,14 @@ public class Retupmoc {
 
     private static final Scanner s = new Scanner(System.in);
     private static final List<Task> list = new ArrayList<>();
+    private static final Path FILE_LOCATION = Paths.get("./saved_data");
 
     public static void main(String[] args) {
         printHorizontalLine();
         printGreeting();
         printHorizontalLine();
+
+        list.addAll(readList());
 
         while (true) {
             String input = getUserInput();
@@ -101,6 +109,7 @@ public class Retupmoc {
     private static void removeTask(int taskNo) throws RetupmocException {
         try {
             Task task = list.remove(taskNo);
+            writeList();
             System.out.println("Noted: I've removed this task:");
             System.out.println(task);
             System.out.println("Now you have " + list.size() + " tasks in the list.");
@@ -112,6 +121,7 @@ public class Retupmoc {
     private static void markTaskDone(int taskNo) throws RetupmocException {
         Task task = findTask(taskNo);
         task.markAsDone();
+        writeList();
         System.out.println("Nice! I've marked this task as done:");
         System.out.println(task);
     }
@@ -119,6 +129,7 @@ public class Retupmoc {
     private static void markTaskNotDone(int taskNo) throws RetupmocException {
         Task task = findTask(taskNo);
         task.markAsNotDone();
+        writeList();
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(task);
     }
@@ -149,9 +160,34 @@ public class Retupmoc {
 
     private static void addTask(Task task) {
         list.add(task);
+        writeList();
         System.out.println("Got it. I've added this task:");
         System.out.println(task);
         System.out.println("Now you have " + list.size() + " tasks in the list.");
+    }
+
+    private static void writeList() {
+        try {
+            List<String> serialized = list.stream().map(Task::serialize).toList();
+            Files.write(FILE_LOCATION, serialized, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            System.out.println("Failed to update save data");
+            printHorizontalLine();
+        }
+    }
+
+    private static List<Task> readList() {
+        try {
+            return Files
+                    .readAllLines(FILE_LOCATION, StandardCharsets.UTF_8)
+                    .stream()
+                    .map(Task::deserialize)
+                    .toList();
+        } catch (IOException e) {
+            System.out.println("Failed to read saved file.");
+            printHorizontalLine();
+            return List.of();
+        }
     }
 
 }

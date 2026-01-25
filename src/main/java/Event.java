@@ -9,10 +9,21 @@ public class Event extends Task {
         this.end = end;
     }
 
+    public Event(String description, boolean isDone, String start, String end) {
+        super(description, isDone);
+        this.start = start;
+        this.end = end;
+    }
+
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + this.start +
                 " to: " + this.end + ")";
+    }
+
+    @Override
+    public String serialize() {
+        return "Event," + super.description + "," + super.isDone + "," + this.start + "," + this.end;
     }
 
 }
