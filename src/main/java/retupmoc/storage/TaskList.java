@@ -1,3 +1,8 @@
+package retupmoc.storage;
+
+import retupmoc.RetupmocException;
+import retupmoc.tasks.Task;
+
 import java.util.ArrayList;
 import java.util.List;
 
