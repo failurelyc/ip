@@ -63,47 +63,47 @@ public class Retupmoc {
      */
     private void runCommand(Command command) throws RetupmocException {
         switch (command.commandType) {
-            case "list":
-                ui.displayList(list);
-                break;
-            case "mark":
-                markTaskDone(Integer.parseInt(command.parameters.get(0)));
-                break;
-            case "unmark":
-                markTaskNotDone(Integer.parseInt(command.parameters.get(0)));
-                break;
-            case "bye":
-                ui.printGoodbye();
-                ui.printHorizontalLine();
-                System.exit(0);
-            case "todo":
-                addTask(new ToDo(command.parameters.get(0)));
-                break;
-            case "deadline":
-                try {
-                    addTask(new Deadline(command.parameters.get(0), command.parameters.get(1)));
-                } catch (DateTimeParseException e) {
-                    throw new RetupmocException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
-                }
-                break;
-            case "event":
-                try {
-                    addTask(
-                            new Event(
-                                    command.parameters.get(0),
-                                    command.parameters.get(1),
-                                    command.parameters.get(2)
-                            )
-                    );
-                } catch (DateTimeParseException e) {
-                    throw new RetupmocException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
-                }
-                break;
-            case "delete":
-                removeTask(Integer.parseInt(command.parameters.get(0)));
-                break;
-            default:
-                throw new RetupmocException("Unknown command: " + command.commandType);
+        case "list":
+            ui.displayList(list);
+            break;
+        case "mark":
+            markTaskDone(Integer.parseInt(command.parameters.get(0)));
+            break;
+        case "unmark":
+            markTaskNotDone(Integer.parseInt(command.parameters.get(0)));
+            break;
+        case "bye":
+            ui.printGoodbye();
+            ui.printHorizontalLine();
+            System.exit(0);
+        case "todo":
+            addTask(new ToDo(command.parameters.get(0)));
+            break;
+        case "deadline":
+            try {
+                addTask(new Deadline(command.parameters.get(0), command.parameters.get(1)));
+            } catch (DateTimeParseException e) {
+                throw new RetupmocException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
+            }
+            break;
+        case "event":
+            try {
+                addTask(
+                        new Event(
+                                command.parameters.get(0),
+                                command.parameters.get(1),
+                                command.parameters.get(2)
+                        )
+                );
+            } catch (DateTimeParseException e) {
+                throw new RetupmocException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
+            }
+            break;
+        case "delete":
+            removeTask(Integer.parseInt(command.parameters.get(0)));
+            break;
+        default:
+            throw new RetupmocException("Unknown command: " + command.commandType);
         }
     }
 

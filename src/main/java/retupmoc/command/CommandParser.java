@@ -103,9 +103,9 @@ public class CommandParser {
                                 .skip(1)
                                 .toList()
                 );
-        if (description.isEmpty())
+        if (description.isEmpty()) {
             throw new RetupmocException("The description of a Task cannot be empty");
-        else {
+        } else {
             return List.of(description, by);
         }
 
@@ -144,9 +144,9 @@ public class CommandParser {
                                 .skip(1)
                                 .toList()
                 );
-        if (description.isEmpty())
+        if (description.isEmpty()) {
             throw new RetupmocException("The description of a Task cannot be empty");
-        else {
+        } else {
             return List.of(description, start, end);
         }
     }
