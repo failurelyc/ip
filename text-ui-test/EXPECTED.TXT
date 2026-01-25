@@ -11,19 +11,19 @@ Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-[D][ ] return book (by: June 6th)
+[D][ ] return book (by: 6 Jun 2025 11.59pm)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+[E][ ] project meeting (from: 6 Aug 2025 2.00pm to: 6 Aug 2025 4.00pm)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
 1. [T][ ] read book
-2. [D][ ] return book (by: June 6th)
-3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+2. [D][ ] return book (by: 6 Jun 2025 11.59pm)
+3. [E][ ] project meeting (from: 6 Aug 2025 2.00pm to: 6 Aug 2025 4.00pm)
 ____________________________________________________________
 ____________________________________________________________
 Nice! I've marked this task as done:
@@ -37,8 +37,8 @@ ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
 1. [T][X] read book
-2. [D][ ] return book (by: June 6th)
-3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+2. [D][ ] return book (by: 6 Jun 2025 11.59pm)
+3. [E][ ] project meeting (from: 6 Aug 2025 2.00pm to: 6 Aug 2025 4.00pm)
 4. [T][ ] join sports club
 ____________________________________________________________
 ____________________________________________________________
@@ -48,8 +48,8 @@ ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
 1. [T][X] read book
-2. [D][ ] return book (by: June 6th)
-3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+2. [D][ ] return book (by: 6 Jun 2025 11.59pm)
+3. [E][ ] project meeting (from: 6 Aug 2025 2.00pm to: 6 Aug 2025 4.00pm)
 4. [T][X] join sports club
 ____________________________________________________________
 ____________________________________________________________
@@ -59,8 +59,8 @@ ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
 1. [T][X] read book
-2. [D][ ] return book (by: June 6th)
-3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+2. [D][ ] return book (by: 6 Jun 2025 11.59pm)
+3. [E][ ] project meeting (from: 6 Aug 2025 2.00pm to: 6 Aug 2025 4.00pm)
 4. [T][ ] join sports club
 ____________________________________________________________
 ____________________________________________________________

@@ -3,6 +3,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -146,7 +147,11 @@ public class Retupmoc {
         String by = String.join(" ", Arrays.stream(input).dropWhile(word -> !"/by".equals(word)).skip(1).toList());
         if (description.isEmpty())
             throw new RetupmocException("The description of a Task cannot be empty");
-        addTask(new Deadline(description, by));
+        try {
+            addTask(new Deadline(description, by));
+        } catch (DateTimeParseException e) {
+            throw new RetupmocException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
+        }
     }
 
     private static void addEvent(String[] input) throws RetupmocException {
@@ -155,7 +160,11 @@ public class Retupmoc {
         String end = String.join(" ", Arrays.stream(input).dropWhile(word -> !"/to".equals(word)).skip(1).toList());
         if (description.isEmpty())
             throw new RetupmocException("The description of a Task cannot be empty");
-        addTask(new Event(description, start, end));
+        try {
+            addTask(new Event(description, start, end));
+        } catch (DateTimeParseException e) {
+            throw new RetupmocException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
+        }
     }
 
     private static void addTask(Task task) {
