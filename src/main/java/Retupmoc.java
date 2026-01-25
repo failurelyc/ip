@@ -1,26 +1,23 @@
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class Retupmoc {
 
     private static final Scanner s = new Scanner(System.in);
-    private static final List<Task> list = new ArrayList<>();
-    private static final Path FILE_LOCATION = Paths.get("./saved_data");
+    private final TaskList list;
+    private final ListFile file;
 
-    public static void main(String[] args) {
+    public Retupmoc(String fileLocation) {
+        file = new ListFile(fileLocation);
+        list = TaskList.deserialize(file.readList());
+    }
+
+    public void run() {
         printHorizontalLine();
         printGreeting();
         printHorizontalLine();
-
-        list.addAll(readList());
 
         while (true) {
             String input = getUserInput();
@@ -34,24 +31,24 @@ public class Retupmoc {
         }
     }
 
-    private static void printGreeting() {
+    private void printGreeting() {
         System.out.println(" Hello! I'm Retupmoc");
         System.out.println(" What can I do for you?");
     }
 
-    private static void printHorizontalLine() {
+    private void printHorizontalLine() {
         System.out.println("____________________________________________________________");
     }
 
-    private static void printGoodbye() {
+    private void printGoodbye() {
         System.out.println(" Bye. Hope to see you again soon!");
     }
 
-    private static String getUserInput() {
+    private String getUserInput() {
         return s.nextLine();
     }
 
-    private static void processUserInput(String input) throws RetupmocException {
+    private void processUserInput(String input) throws RetupmocException {
         String[] tokens = input.trim().split("\\s+");
         switch (tokens[0].toLowerCase()) {
             case "list":
@@ -84,14 +81,12 @@ public class Retupmoc {
         }
     }
 
-    private static void displayList() {
+    private void displayList() {
         System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println((i + 1) + ". " + list.get(i));
-        }
+        System.out.println(list);
     }
 
-    private static int convertInputToTaskNo(String[] input) throws RetupmocException {
+    private int convertInputToTaskNo(String[] input) throws RetupmocException {
         try {
             return Integer.parseInt(input[1]) - 1;
         } catch (NumberFormatException e) {
@@ -99,50 +94,42 @@ public class Retupmoc {
         }
     }
 
-    private static Task findTask(int taskNo) throws RetupmocException {
+    private void removeTask(int taskNo) throws RetupmocException {
         try {
-            return list.get(taskNo);
-        } catch (IndexOutOfBoundsException e) {
-            throw new RetupmocException("Task not found");
-        }
-    }
-
-    private static void removeTask(int taskNo) throws RetupmocException {
-        try {
-            Task task = list.remove(taskNo);
-            writeList();
+            Task task = list.removeTask(taskNo);
+            file.writeList(list.serialize());
             System.out.println("Noted: I've removed this task:");
             System.out.println(task);
-            System.out.println("Now you have " + list.size() + " tasks in the list.");
+            System.out.println("Now you have " + list.getNoOfTasks() + " tasks in the list.");
         } catch (IndexOutOfBoundsException e) {
             throw new RetupmocException("Task not found");
         }
     }
 
-    private static void markTaskDone(int taskNo) throws RetupmocException {
-        Task task = findTask(taskNo);
+    private void markTaskDone(int taskNo) throws RetupmocException {
+        Task task = list.findTask(taskNo);
         task.markAsDone();
-        writeList();
+        file.writeList(list.serialize());
         System.out.println("Nice! I've marked this task as done:");
         System.out.println(task);
     }
 
-    private static void markTaskNotDone(int taskNo) throws RetupmocException {
-        Task task = findTask(taskNo);
+    private void markTaskNotDone(int taskNo) throws RetupmocException {
+        Task task = list.findTask(taskNo);
         task.markAsNotDone();
-        writeList();
+        file.writeList(list.serialize());
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(task);
     }
 
-    private static void addToDo(String[] input) throws RetupmocException {
+    private void addToDo(String[] input) throws RetupmocException {
         String description = String.join(" ", Arrays.stream(input).skip(1).toList());
         if (description.isEmpty())
             throw new RetupmocException("The description of a Task cannot be empty");
         addTask(new ToDo(description));
     }
 
-    private static void addDeadline(String[] input) throws RetupmocException {
+    private void addDeadline(String[] input) throws RetupmocException {
         String description = String.join(" ", Arrays.stream(input).takeWhile(word -> !"/by".equals(word)).skip(1).toList());
         String by = String.join(" ", Arrays.stream(input).dropWhile(word -> !"/by".equals(word)).skip(1).toList());
         if (description.isEmpty())
@@ -154,7 +141,7 @@ public class Retupmoc {
         }
     }
 
-    private static void addEvent(String[] input) throws RetupmocException {
+    private void addEvent(String[] input) throws RetupmocException {
         String description = String.join(" ", Arrays.stream(input).takeWhile(word -> !"/from".equals(word)).skip(1).toList());
         String start = String.join(" ", Arrays.stream(input).dropWhile(word -> !"/from".equals(word)).skip(1).takeWhile(word -> !"/to".equals(word)).toList());
         String end = String.join(" ", Arrays.stream(input).dropWhile(word -> !"/to".equals(word)).skip(1).toList());
@@ -167,36 +154,16 @@ public class Retupmoc {
         }
     }
 
-    private static void addTask(Task task) {
-        list.add(task);
-        writeList();
+    private void addTask(Task task) {
+        list.addTask(task);
+        file.writeList(list.serialize());
         System.out.println("Got it. I've added this task:");
         System.out.println(task);
-        System.out.println("Now you have " + list.size() + " tasks in the list.");
+        System.out.println("Now you have " + list.getNoOfTasks() + " tasks in the list.");
     }
 
-    private static void writeList() {
-        try {
-            List<String> serialized = list.stream().map(Task::serialize).toList();
-            Files.write(FILE_LOCATION, serialized, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            System.out.println("Failed to update save data");
-            printHorizontalLine();
-        }
+    public static void main(String[] args) {
+        Retupmoc retupmoc = new Retupmoc("./saved_data");
+        retupmoc.run();
     }
-
-    private static List<Task> readList() {
-        try {
-            return Files
-                    .readAllLines(FILE_LOCATION, StandardCharsets.UTF_8)
-                    .stream()
-                    .map(Task::deserialize)
-                    .toList();
-        } catch (IOException e) {
-            System.out.println("Failed to read saved file.");
-            printHorizontalLine();
-            return List.of();
-        }
-    }
-
 }
