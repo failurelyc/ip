@@ -64,16 +64,12 @@ public abstract class Task {
         String taskType = parameters[0];
         String description = parameters[1];
         boolean isDone = Boolean.parseBoolean(parameters[2]);
-        switch (taskType) {
-        case "ToDo":
-            return new ToDo(description, isDone);
-        case "Deadline":
-            return new Deadline(description, isDone, parameters[3]);
-        case "Event":
-            return new Event(description, isDone, parameters[3], parameters[4]);
-        default:
-            throw new IllegalArgumentException("Not a valid task");
-        }
+        return switch (taskType) {
+            case "ToDo" -> new ToDo(description, isDone);
+            case "Deadline" -> new Deadline(description, isDone, parameters[3]);
+            case "Event" -> new Event(description, isDone, parameters[3], parameters[4]);
+            default -> throw new IllegalArgumentException("Not a valid task");
+        };
     }
 
 }
