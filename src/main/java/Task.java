@@ -1,4 +1,27 @@
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
+
 public abstract class Task {
+
+    public static final String INPUT_FORMAT = "dd/MM/yyyy HHmm";
+    protected static final DateTimeFormatter startDateFormatter = new DateTimeFormatterBuilder()
+            .appendPattern("dd/MM/yyyy")
+            .optionalStart()
+            .appendPattern(" HHmm")
+            .optionalEnd()
+            .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+            .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+            .toFormatter();
+    protected static final DateTimeFormatter endDateFormatter = new DateTimeFormatterBuilder()
+            .appendPattern("dd/MM/yyyy")
+            .optionalStart()
+            .appendPattern(" HHmm")
+            .optionalEnd()
+            .parseDefaulting(ChronoField.HOUR_OF_DAY, 23)
+            .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 59)
+            .toFormatter();
+    protected static final DateTimeFormatter printDateFormatter = DateTimeFormatter.ofPattern("d MMM yyyy K.mma");
 
     protected String description;
     protected boolean isDone;
