@@ -38,6 +38,10 @@ public abstract class Task {
         this.isDone = isDone;
     }
 
+    public boolean containsDescription(String partialDescription) {
+        return this.description.contains(partialDescription);
+    }
+
     private String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }

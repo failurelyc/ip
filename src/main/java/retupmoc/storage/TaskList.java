@@ -31,6 +31,14 @@ public class TaskList {
         }
     }
 
+    public TaskList findTasks(String partialDescription) {
+        List<Task> partialList = list
+                .stream()
+                .filter(task -> task.containsDescription(partialDescription))
+                .toList();
+        return new TaskList(partialList);
+    }
+
     public Task removeTask(int taskNo) throws RetupmocException {
         try {
             return list.remove(taskNo);
