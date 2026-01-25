@@ -6,18 +6,36 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * A parser that parses raw user input into the command type and parameters.
+ */
 public class CommandParser {
 
     private final Scanner s;
 
+    /**
+     * Constructs a new CommandParser with System.in as the input stream.
+     */
     public CommandParser() {
         s = new Scanner(System.in);
     }
 
+    /**
+     * Obtains the next user input.
+     *
+     * @return the user input
+     */
     public String getUserInput() {
         return s.nextLine();
     }
 
+    /**
+     * Parses the raw user input into a command.
+     *
+     * @param input the user input
+     * @return the parsed command
+     * @throws RetupmocException if the user input is invalid
+     */
     public Command parse(String input) throws RetupmocException {
         String[] tokens = input.trim().split("\\s+");
         String commandType = tokens[0].toLowerCase();
@@ -36,6 +54,13 @@ public class CommandParser {
         };
     }
 
+    /**
+     * Parses the user input into a command for finding a task.
+     *
+     * @param tokens each word in the user input
+     * @return the parsed command
+     * @throws RetupmocException if the task number in the user input is invalid
+     */
     private static List<String> parseParamsForFindTask(String[] tokens) throws RetupmocException {
         try {
             return List.of(String.valueOf(Integer.parseInt(tokens[1]) - 1));
@@ -44,11 +69,24 @@ public class CommandParser {
         }
     }
 
-    private static List<String> parseParamsForToDoTask(String[] tokens) throws RetupmocException {
+    /**
+     * Parses the user input into a command for adding a task.
+     *
+     * @param tokens each word in the user input
+     * @return the parsed command
+     */
+    private static List<String> parseParamsForToDoTask(String[] tokens) {
         String description = String.join(" ", Arrays.stream(tokens).skip(1).toList());
         return List.of(description);
     }
 
+    /**
+     * Parses the user input into a command for adding a Deadline task.
+     *
+     * @param tokens each word in the user input
+     * @return the parsed command
+     * @throws RetupmocException if the task description in the user input is empty
+     */
     private static List<String> parseParamsForDeadlineTask(String[] tokens) throws RetupmocException {
         String description = String
                 .join(
@@ -73,6 +111,13 @@ public class CommandParser {
 
     }
 
+    /**
+     * Parses the user input into a command for adding an Event task.
+     *
+     * @param tokens each word in the user input
+     * @return the parsed command
+     * @throws RetupmocException if the task description in the user input is empty
+     */
     private static List<String> parseParamsForEventTask(String[] tokens) throws RetupmocException {
         String description = String
                 .join(

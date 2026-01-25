@@ -12,6 +12,9 @@ import retupmoc.ui.Ui;
 
 import java.time.format.DateTimeParseException;
 
+/**
+ * The main class of this application.
+ */
 public class Retupmoc {
 
     private final TaskList list;
@@ -19,6 +22,11 @@ public class Retupmoc {
     private final Ui ui;
     private final CommandParser parser;
 
+    /**
+     * Constructs a new Retupmoc which initialises the other components of this application.
+     *
+     * @param fileLocation The path to the saved data
+     */
     public Retupmoc(String fileLocation) {
         parser = new CommandParser();
         file = new ListFile(fileLocation);
@@ -26,6 +34,9 @@ public class Retupmoc {
         ui = new Ui();
     }
 
+    /**
+     * Runs the application.
+     */
     public void run() {
         ui.printHorizontalLine();
         ui.printGreeting();
@@ -44,6 +55,12 @@ public class Retupmoc {
         }
     }
 
+    /**
+     * Runs the parsed command.
+     *
+     * @param command The parsed command
+     * @throws RetupmocException If an exception occurs when executing the command
+     */
     private void runCommand(Command command) throws RetupmocException {
         switch (command.commandType) {
             case "list":
@@ -90,6 +107,12 @@ public class Retupmoc {
         }
     }
 
+    /**
+     * Removes the task from the list and displays the message.
+     *
+     * @param taskNo The index of the task in the list
+     * @throws RetupmocException If the task is not found
+     */
     private void removeTask(int taskNo) throws RetupmocException {
         try {
             Task task = list.removeTask(taskNo);
@@ -101,6 +124,12 @@ public class Retupmoc {
         }
     }
 
+    /**
+     * Marks a task as done and displays the message.
+     *
+     * @param taskNo The index of the task in the list
+     * @throws RetupmocException If the task is not found
+     */
     private void markTaskDone(int taskNo) throws RetupmocException {
         Task task = list.findTask(taskNo);
         task.markAsDone();
@@ -108,6 +137,12 @@ public class Retupmoc {
         ui.printMarkTaskDone(task);
     }
 
+    /**
+     * Marks a task as not done and displays the message.
+     *
+     * @param taskNo The index of the task in the list
+     * @throws RetupmocException If the task is not found
+     */
     private void markTaskNotDone(int taskNo) throws RetupmocException {
         Task task = list.findTask(taskNo);
         task.markAsNotDone();
@@ -115,6 +150,11 @@ public class Retupmoc {
         ui.printMarkTaskNotDone(task);
     }
 
+    /**
+     * Adds the task to the list and displays the message.
+     *
+     * @param task The task to be added
+     */
     private void addTask(Task task) {
         list.addTask(task);
         file.writeList(list.serialize());
