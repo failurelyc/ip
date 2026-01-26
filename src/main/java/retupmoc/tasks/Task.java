@@ -41,8 +41,15 @@ public abstract class Task {
         this.isDone = isDone;
     }
 
+    /**
+     * Check if this task description contains the partial description provided.
+     * Case is ignored.
+     *
+     * @param partialDescription the partial description
+     * @return True if the task description contains the partial description, false otherwise
+     */
     public boolean containsDescription(String partialDescription) {
-        return this.description.contains(partialDescription);
+        return this.description.toLowerCase().contains(partialDescription.toLowerCase());
     }
 
     /**

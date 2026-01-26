@@ -125,7 +125,7 @@ public class CommandParser {
                 .join(
                         " ",
                         Arrays.stream(tokens)
-                                .takeWhile(word -> !"/from".equals(word))
+                                .takeWhile(word -> !"/from".equals(word) && !"/to".equals(word))
                                 .skip(1)
                                 .toList()
                 );
