@@ -52,6 +52,14 @@ public class TaskList {
         }
     }
 
+    public TaskList findTasks(String partialDescription) {
+        List<Task> partialList = list
+                .stream()
+                .filter(task -> task.containsDescription(partialDescription))
+                .toList();
+        return new TaskList(partialList);
+    }
+
     /**
      * Removes the task from the list.
      *

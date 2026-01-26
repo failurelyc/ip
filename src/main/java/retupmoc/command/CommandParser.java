@@ -42,7 +42,7 @@ public class CommandParser {
         return switch (commandType) {
             case "mark", "unmark", "delete":
                 yield new Command(commandType, parseParamsForFindTask(tokens));
-            case "todo":
+            case "todo", "find":
                 yield new Command(commandType, parseParamsForToDoTask(tokens));
             case "deadline":
                 yield new Command(commandType, parseParamsForDeadlineTask(tokens));
@@ -75,8 +75,10 @@ public class CommandParser {
      * @param tokens each word in the user input
      * @return the parsed command
      */
-    private static List<String> parseParamsForToDoTask(String[] tokens) {
+    private static List<String> parseParamsForToDoTask(String[] tokens) throws RetupmocException {
         String description = String.join(" ", Arrays.stream(tokens).skip(1).toList());
+        if (description.isEmpty())
+            throw new RetupmocException("The description of a Task cannot be empty");
         return List.of(description);
     }
 

@@ -102,6 +102,9 @@ public class Retupmoc {
         case "delete":
             removeTask(Integer.parseInt(command.parameters.get(0)));
             break;
+        case "find":
+            ui.displayList(list.findTasks(command.parameters.get(0)));
+            break;
         default:
             throw new RetupmocException("Unknown command: " + command.commandType);
         }

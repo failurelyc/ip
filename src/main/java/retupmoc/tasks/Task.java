@@ -41,6 +41,10 @@ public abstract class Task {
         this.isDone = isDone;
     }
 
+    public boolean containsDescription(String partialDescription) {
+        return this.description.contains(partialDescription);
+    }
+
     /**
      * Gets the status icon representing whether the task is done.
      *
