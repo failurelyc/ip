@@ -1,10 +1,13 @@
 package retupmoc.tasks;
 
-import org.junit.jupiter.api.Test;
-
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TaskTest {
 
@@ -133,27 +136,27 @@ public class TaskTest {
         assertInstanceOf(Deadline.class, task);
         assertEquals("abc", task.description);
         assertTrue(task.isDone);
-        assertEquals(LocalDateTime.of(2025,12,1,13,0), ((Deadline) task).by);
+        assertEquals(LocalDateTime.of(2025, 12, 1, 13, 0), ((Deadline) task).by);
 
         assertInstanceOf(Deadline.class, task2);
         assertEquals("abc", task2.description);
         assertFalse(task2.isDone);
-        assertEquals(LocalDateTime.of(2024,1,2,12,0), ((Deadline) task2).by);
+        assertEquals(LocalDateTime.of(2024, 1, 2, 12, 0), ((Deadline) task2).by);
 
         assertInstanceOf(Deadline.class, task3);
         assertEquals("abc def 12345", task3.description);
         assertFalse(task3.isDone);
-        assertEquals(LocalDateTime.of(2023,2,3,11,0), ((Deadline) task3).by);
+        assertEquals(LocalDateTime.of(2023, 2, 3, 11, 0), ((Deadline) task3).by);
 
         assertInstanceOf(Deadline.class, task4);
         assertEquals("12345 abc def", task4.description);
         assertTrue(task4.isDone);
-        assertEquals(LocalDateTime.of(2022,3,4,10,0), ((Deadline) task4).by);
+        assertEquals(LocalDateTime.of(2022, 3, 4, 10, 0), ((Deadline) task4).by);
 
         assertInstanceOf(Deadline.class, task5);
         assertEquals("", task5.description);
         assertTrue(task5.isDone);
-        assertEquals(LocalDateTime.of(2021,4,5,9,0), ((Deadline) task5).by);
+        assertEquals(LocalDateTime.of(2021, 4, 5, 9, 0), ((Deadline) task5).by);
 
     }
 
@@ -198,32 +201,32 @@ public class TaskTest {
         assertInstanceOf(Event.class, task);
         assertEquals("abc", task.description);
         assertTrue(task.isDone);
-        assertEquals(LocalDateTime.of(2025,12,1,13,0), ((Event) task).start);
-        assertEquals(LocalDateTime.of(2025,12,16,22,0), ((Event) task).end);
+        assertEquals(LocalDateTime.of(2025, 12, 1, 13, 0), ((Event) task).start);
+        assertEquals(LocalDateTime.of(2025, 12, 16, 22, 0), ((Event) task).end);
 
         assertInstanceOf(Event.class, task2);
         assertEquals("abc", task2.description);
         assertFalse(task2.isDone);
-        assertEquals(LocalDateTime.of(2024,1,2,12,0), ((Event) task2).start);
-        assertEquals(LocalDateTime.of(2024,1,17,21,0), ((Event) task2).end);
+        assertEquals(LocalDateTime.of(2024, 1, 2, 12, 0), ((Event) task2).start);
+        assertEquals(LocalDateTime.of(2024, 1, 17, 21, 0), ((Event) task2).end);
 
         assertInstanceOf(Event.class, task3);
         assertEquals("abc def 12345", task3.description);
         assertFalse(task3.isDone);
-        assertEquals(LocalDateTime.of(2023,2,3,11,0), ((Event) task3).start);
-        assertEquals(LocalDateTime.of(2023,2,18,20,0), ((Event) task3).end);
+        assertEquals(LocalDateTime.of(2023, 2, 3, 11, 0), ((Event) task3).start);
+        assertEquals(LocalDateTime.of(2023, 2, 18, 20, 0), ((Event) task3).end);
 
         assertInstanceOf(Event.class, task4);
         assertEquals("12345 abc def", task4.description);
         assertTrue(task4.isDone);
-        assertEquals(LocalDateTime.of(2022,3,4,10,0), ((Event) task4).start);
-        assertEquals(LocalDateTime.of(2022,3,19,19,0), ((Event) task4).end);
+        assertEquals(LocalDateTime.of(2022, 3, 4, 10, 0), ((Event) task4).start);
+        assertEquals(LocalDateTime.of(2022, 3, 19, 19, 0), ((Event) task4).end);
 
         assertInstanceOf(Event.class, task5);
         assertEquals("", task5.description);
         assertTrue(task5.isDone);
-        assertEquals(LocalDateTime.of(2021,4,5,9,0), ((Event) task5).start);
-        assertEquals(LocalDateTime.of(2021,4,20,18,0), ((Event) task5).end);
+        assertEquals(LocalDateTime.of(2021, 4, 5, 9, 0), ((Event) task5).start);
+        assertEquals(LocalDateTime.of(2021, 4, 20, 18, 0), ((Event) task5).end);
 
     }
 

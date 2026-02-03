@@ -1,5 +1,7 @@
 package retupmoc;
 
+import java.time.format.DateTimeParseException;
+
 import retupmoc.command.Command;
 import retupmoc.command.CommandParser;
 import retupmoc.storage.ListFile;
@@ -9,8 +11,6 @@ import retupmoc.tasks.Event;
 import retupmoc.tasks.Task;
 import retupmoc.tasks.ToDo;
 import retupmoc.ui.Ui;
-
-import java.time.format.DateTimeParseException;
 
 /**
  * The main class of this application.
@@ -76,6 +76,7 @@ public class Retupmoc {
             ui.printGoodbye();
             ui.printHorizontalLine();
             System.exit(0);
+            // fallthrough
         case "todo":
             addTask(new ToDo(command.parameters.get(0)));
             break;

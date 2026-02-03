@@ -10,7 +10,7 @@ import java.time.temporal.ChronoField;
 public abstract class Task {
 
     public static final String INPUT_FORMAT = "dd/MM/yyyy HHmm";
-    protected static final DateTimeFormatter startDateFormatter = new DateTimeFormatterBuilder()
+    protected static final DateTimeFormatter START_DATE_FORMATTER = new DateTimeFormatterBuilder()
             .appendPattern("dd/MM/yyyy")
             .optionalStart()
             .appendPattern(" HHmm")
@@ -18,7 +18,7 @@ public abstract class Task {
             .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
             .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
             .toFormatter();
-    protected static final DateTimeFormatter endDateFormatter = new DateTimeFormatterBuilder()
+    protected static final DateTimeFormatter END_DATE_FORMATTER = new DateTimeFormatterBuilder()
             .appendPattern("dd/MM/yyyy")
             .optionalStart()
             .appendPattern(" HHmm")
@@ -26,12 +26,12 @@ public abstract class Task {
             .parseDefaulting(ChronoField.HOUR_OF_DAY, 23)
             .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 59)
             .toFormatter();
-    protected static final DateTimeFormatter printDateFormatter = DateTimeFormatter.ofPattern("d MMM yyyy K.mma");
+    protected static final DateTimeFormatter PRINT_DATE_FORMATTER = DateTimeFormatter.ofPattern("d MMM yyyy K.mma");
 
     protected String description;
     protected boolean isDone;
 
-    public Task(String description) {
+    protected Task(String description) {
         this.description = description;
         this.isDone = false;
     }
@@ -101,8 +101,9 @@ public abstract class Task {
      */
     public static Task deserialize(String s) {
         String[] parameters = s.split(",", -1);
-        if (parameters.length < 1)
+        if (parameters.length < 1) {
             throw new IllegalArgumentException();
+        }
         String taskType = parameters[0];
         String description = parameters[1];
         boolean isDone = Boolean.parseBoolean(parameters[2]);

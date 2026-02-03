@@ -1,10 +1,10 @@
 package retupmoc.storage;
 
-import retupmoc.RetupmocException;
-import retupmoc.tasks.Task;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import retupmoc.RetupmocException;
+import retupmoc.tasks.Task;
 
 /**
  * This class represents the task list.
@@ -52,6 +52,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Returns all tasks containing partial description.
+     *
+     * @param partialDescription The partial description
+     * @return A list containing all tasks with that partial description
+     */
     public TaskList findTasks(String partialDescription) {
         List<Task> partialList = list
                 .stream()

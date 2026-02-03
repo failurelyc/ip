@@ -1,10 +1,10 @@
 package retupmoc.command;
 
-import retupmoc.RetupmocException;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+import retupmoc.RetupmocException;
 
 /**
  * A parser that parses raw user input into the command type and parameters.
@@ -77,8 +77,9 @@ public class CommandParser {
      */
     private static List<String> parseParamsForToDoTask(String[] tokens) throws RetupmocException {
         String description = String.join(" ", Arrays.stream(tokens).skip(1).toList());
-        if (description.isEmpty())
+        if (description.isEmpty()) {
             throw new RetupmocException("The description of a Task cannot be empty");
+        }
         return List.of(description);
     }
 

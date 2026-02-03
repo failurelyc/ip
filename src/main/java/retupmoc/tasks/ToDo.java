@@ -1,5 +1,8 @@
 package retupmoc.tasks;
 
+/**
+ * This class represents a To Do task which has no additional data.
+ */
 public class ToDo extends Task {
 
     public ToDo(String description) {

@@ -1,9 +1,10 @@
 package retupmoc.command;
 
-import org.junit.jupiter.api.Test;
-import retupmoc.RetupmocException;
-
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import retupmoc.RetupmocException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -56,7 +57,7 @@ public class CommandParserTest {
     }
 
     @Test
-    public void parseParamsForToDoTask_haveDescription_correct_Params() throws RetupmocException{
+    public void parseParamsForToDoTask_haveDescription_correctParams() throws RetupmocException {
 
         CommandParser parser = new CommandParser();
         String input = "todo abc";
@@ -91,7 +92,7 @@ public class CommandParserTest {
     }
 
     @Test
-    public void parseParamsForDeadlineTask_haveDescription_correct_Params() throws RetupmocException{
+    public void parseParamsForDeadlineTask_haveDescription_correctParams() throws RetupmocException {
 
         CommandParser parser = new CommandParser();
         String input = "deadline abc /by 01/01/2025";
@@ -126,7 +127,7 @@ public class CommandParserTest {
     }
 
     @Test
-    public void parseParamsForEventTask_haveDescription_correct_Params() throws RetupmocException{
+    public void parseParamsForEventTask_haveDescription_correctParams() throws RetupmocException {
 
         CommandParser parser = new CommandParser();
         String input = "event abc /from 01/01/2025 /to 02/01/2025";
