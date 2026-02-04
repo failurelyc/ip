@@ -61,7 +61,7 @@ public class CommandParser {
      * @return the parsed command
      * @throws RetupmocException if the task number in the user input is invalid
      */
-    private static List<String> parseParamsForFindTask(String[] tokens) throws RetupmocException {
+    private static List<String> parseParamsForFindTask(String ... tokens) throws RetupmocException {
         try {
             return List.of(String.valueOf(Integer.parseInt(tokens[1]) - 1));
         } catch (NumberFormatException e) {
@@ -75,7 +75,7 @@ public class CommandParser {
      * @param tokens each word in the user input
      * @return the parsed command
      */
-    private static List<String> parseParamsForToDoTask(String[] tokens) throws RetupmocException {
+    private static List<String> parseParamsForToDoTask(String ... tokens) throws RetupmocException {
         String description = String.join(" ", Arrays.stream(tokens).skip(1).toList());
         if (description.isEmpty()) {
             throw new RetupmocException("The description of a Task cannot be empty");
@@ -90,7 +90,7 @@ public class CommandParser {
      * @return the parsed command
      * @throws RetupmocException if the task description in the user input is empty
      */
-    private static List<String> parseParamsForDeadlineTask(String[] tokens) throws RetupmocException {
+    private static List<String> parseParamsForDeadlineTask(String ... tokens) throws RetupmocException {
         String description = String
                 .join(
                         " ",
@@ -121,7 +121,7 @@ public class CommandParser {
      * @return the parsed command
      * @throws RetupmocException if the task description in the user input is empty
      */
-    private static List<String> parseParamsForEventTask(String[] tokens) throws RetupmocException {
+    private static List<String> parseParamsForEventTask(String ... tokens) throws RetupmocException {
         String description = String
                 .join(
                         " ",
