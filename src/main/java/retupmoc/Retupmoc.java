@@ -35,61 +35,52 @@ public class Retupmoc {
     }
 
     /**
-     * Runs the application.
+     * Processes user input and runs the user command if valid.
+     *
+     * @param input the user input
+     * @return the chatbot output
      */
-    public void run() {
-        ui.printHorizontalLine();
-        ui.printGreeting();
-        ui.printHorizontalLine();
+    public String run(String input) {
 
-        while (true) {
-            String input = parser.getUserInput();
-            ui.printHorizontalLine();
-            try {
-                Command command = parser.parse(input);
-                runCommand(command);
-            } catch (RetupmocException e) {
-                ui.printErrorMessage(e);
-            }
-            ui.printHorizontalLine();
+        try {
+            Command command = parser.parse(input);
+            return runCommand(command);
+        } catch (RetupmocException e) {
+            return ui.printErrorMessage(e);
         }
+
     }
 
     /**
      * Runs the parsed command.
      *
      * @param command The parsed command
+     * @return the chatbot output
      * @throws RetupmocException If an exception occurs when executing the command
      */
-    private void runCommand(Command command) throws RetupmocException {
-        switch (command.commandType) {
+    private String runCommand(Command command) throws RetupmocException {
+        return switch (command.commandType) {
+        case "greet":
+            yield ui.printGreeting();
         case "list":
-            ui.displayList(list);
-            break;
+            yield ui.displayList(list);
         case "mark":
-            markTaskDone(Integer.parseInt(command.parameters.get(0)));
-            break;
+            yield markTaskDone(Integer.parseInt(command.parameters.get(0)));
         case "unmark":
-            markTaskNotDone(Integer.parseInt(command.parameters.get(0)));
-            break;
+            yield markTaskNotDone(Integer.parseInt(command.parameters.get(0)));
         case "bye":
-            ui.printGoodbye();
-            ui.printHorizontalLine();
-            System.exit(0);
-            // fallthrough
+            yield ui.printGoodbye();
         case "todo":
-            addTask(new ToDo(command.parameters.get(0)));
-            break;
+            yield addTask(new ToDo(command.parameters.get(0)));
         case "deadline":
             try {
-                addTask(new Deadline(command.parameters.get(0), command.parameters.get(1)));
+                yield addTask(new Deadline(command.parameters.get(0), command.parameters.get(1)));
             } catch (DateTimeParseException e) {
                 throw new RetupmocException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
             }
-            break;
         case "event":
             try {
-                addTask(
+                yield addTask(
                         new Event(
                                 command.parameters.get(0),
                                 command.parameters.get(1),
@@ -99,75 +90,70 @@ public class Retupmoc {
             } catch (DateTimeParseException e) {
                 throw new RetupmocException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
             }
-            break;
         case "delete":
-            removeTask(Integer.parseInt(command.parameters.get(0)));
-            break;
+            yield removeTask(Integer.parseInt(command.parameters.get(0)));
         case "find":
-            ui.displayList(list.findTasks(command.parameters.get(0)));
-            break;
+            yield ui.displayList(list.findTasks(command.parameters.get(0)));
         default:
             throw new RetupmocException("Unknown command: " + command.commandType);
-        }
+        };
     }
 
     /**
-     * Removes the task from the list and displays the message.
+     * Removes the task from the list and returns the chatbot output.
      *
      * @param taskNo The index of the task in the list
+     * @return the chatbot output
      * @throws RetupmocException If the task is not found
      */
-    private void removeTask(int taskNo) throws RetupmocException {
+    private String removeTask(int taskNo) throws RetupmocException {
         try {
             Task task = list.removeTask(taskNo);
             file.writeList(list.serialize());
-            ui.printTaskRemovalSuccess(task);
-            ui.printNoOfTask(list);
+            return ui.printTaskRemovalSuccess(task) + "\n" + ui.printNoOfTask(list);
         } catch (IndexOutOfBoundsException e) {
             throw new RetupmocException("Task not found");
         }
     }
 
     /**
-     * Marks a task as done and displays the message.
+     * Marks a task as done and returns the chatbot output.
      *
      * @param taskNo The index of the task in the list
+     * @return the chatbot output
      * @throws RetupmocException If the task is not found
      */
-    private void markTaskDone(int taskNo) throws RetupmocException {
+    private String markTaskDone(int taskNo) throws RetupmocException {
         Task task = list.findTask(taskNo);
         task.markAsDone();
         file.writeList(list.serialize());
-        ui.printMarkTaskDone(task);
+        return ui.printMarkTaskDone(task);
     }
 
     /**
-     * Marks a task as not done and displays the message.
+     * Marks a task as not done and returns the chatbot output.
      *
      * @param taskNo The index of the task in the list
+     * @return the chatbot output
      * @throws RetupmocException If the task is not found
      */
-    private void markTaskNotDone(int taskNo) throws RetupmocException {
+    private String markTaskNotDone(int taskNo) throws RetupmocException {
         Task task = list.findTask(taskNo);
         task.markAsNotDone();
         file.writeList(list.serialize());
-        ui.printMarkTaskNotDone(task);
+        return ui.printMarkTaskNotDone(task);
     }
 
     /**
-     * Adds the task to the list and displays the message.
+     * Adds the task to the list and returns the chatbot output.
      *
      * @param task The task to be added
+     * @return the chatbot output
      */
-    private void addTask(Task task) {
+    private String addTask(Task task) {
         list.addTask(task);
         file.writeList(list.serialize());
-        ui.printAddTaskSuccess(task);
-        ui.printNoOfTask(list);
+        return ui.printAddTaskSuccess(task) + "\n" + ui.printNoOfTask(list);
     }
 
-    public static void main(String[] args) {
-        Retupmoc retupmoc = new Retupmoc("./saved_data");
-        retupmoc.run();
-    }
 }
