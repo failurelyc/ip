@@ -2,7 +2,6 @@ package retupmoc.command;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 import retupmoc.RetupmocException;
 
@@ -10,24 +9,6 @@ import retupmoc.RetupmocException;
  * A parser that parses raw user input into the command type and parameters.
  */
 public class CommandParser {
-
-    private final Scanner s;
-
-    /**
-     * Constructs a new CommandParser with System.in as the input stream.
-     */
-    public CommandParser() {
-        s = new Scanner(System.in);
-    }
-
-    /**
-     * Obtains the next user input.
-     *
-     * @return the user input
-     */
-    public String getUserInput() {
-        return s.nextLine();
-    }
 
     /**
      * Parses the raw user input into a command.
