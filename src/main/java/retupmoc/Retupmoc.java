@@ -65,13 +65,16 @@ public class Retupmoc {
         case LIST:
             yield ui.displayList(list);
         case MARK:
-            yield markTaskDone(Integer.parseInt(command.parameters().get(0)));
+            assert !command.parameters.isEmpty();
+            yield markTaskDone(Integer.parseInt(command.parameters.get(0)));
         case UNMARK:
-            yield markTaskNotDone(Integer.parseInt(command.parameters().get(0)));
+            assert !command.parameters.isEmpty();
+            yield markTaskNotDone(Integer.parseInt(command.parameters.get(0)));
         case BYE:
             yield ui.printGoodbye();
         case TODO:
-            yield addTask(new ToDo(command.parameters().get(0)));
+            assert !command.parameters.isEmpty();
+            yield addTask(new ToDo(command.parameters.get(0)));
         case DEADLINE:
             try {
                 yield addTask(new Deadline(command.parameters().get(0), command.parameters().get(1)));
@@ -79,6 +82,7 @@ public class Retupmoc {
                 throw new RetupmocException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
             }
         case EVENT:
+            assert command.parameters.size() >= 3;
             try {
                 yield addTask(
                         new Event(
@@ -91,8 +95,10 @@ public class Retupmoc {
                 throw new RetupmocException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
             }
         case DELETE:
+            assert !command.parameters.isEmpty();
             yield removeTask(Integer.parseInt(command.parameters().get(0)));
         case FIND:
+            assert !command.parameters.isEmpty();
             yield ui.displayList(list.findTasks(command.parameters().get(0)));
         default:
             throw new RetupmocException("Unknown command: " + command.commandType());

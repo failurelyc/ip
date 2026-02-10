@@ -52,6 +52,8 @@ public class CommandParser {
             return List.of(String.valueOf(Integer.parseInt(tokens[1]) - 1));
         } catch (NumberFormatException e) {
             throw new RetupmocException("Invalid task number");
+        } catch (IndexOutOfBoundsException e) {
+            throw new RetupmocException("No task specified");
         }
     }
 
