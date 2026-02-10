@@ -4,6 +4,7 @@ import java.time.format.DateTimeParseException;
 
 import retupmoc.command.Command;
 import retupmoc.command.CommandParser;
+import retupmoc.command.CommandType;
 import retupmoc.storage.ListFile;
 import retupmoc.storage.TaskList;
 import retupmoc.tasks.Deadline;
@@ -101,6 +102,13 @@ public class Retupmoc {
         case FIND:
             assert !command.parameters().isEmpty();
             yield ui.displayList(list.findTasks(command.parameters().get(0)));
+        case HELP:
+            assert !command.parameters().isEmpty();
+            try {
+                yield "Usage: " + CommandType.valueOf(command.parameters().get(0)).getFormat();
+            } catch (IllegalArgumentException e) {
+                throw new RetupmocException("That is not a valid command.");
+            }
         default:
             throw new RetupmocException("Unknown command: " + command.commandType());
         };

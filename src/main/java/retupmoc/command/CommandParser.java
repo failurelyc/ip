@@ -31,12 +31,22 @@ public class CommandParser {
                 yield new Command(commandType, parseParamsForDeadlineTask(tokens));
             case EVENT:
                 yield new Command(commandType, parseParamsForEventTask(tokens));
+            case HELP:
+                yield new Command(commandType, parseHelp(tokens));
             default:
-                yield new Command(commandType, List.of());
+                yield new Command(commandType, List.of(tokens));
 
             };
         } catch (IllegalArgumentException e) {
             throw new RetupmocException("Unknown command: " + commandTypeString);
+        }
+    }
+
+    private static List<String> parseHelp(String ... tokens) {
+        try {
+            return List.of(tokens[1].toUpperCase());
+        } catch (IndexOutOfBoundsException e) {
+            return List.of("HELP");
         }
     }
 
