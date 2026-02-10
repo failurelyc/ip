@@ -82,28 +82,6 @@ public class TaskList {
     }
 
     /**
-     * Marks a task as done.
-     *
-     * @param taskNo The index of the task in the list
-     * @throws RetupmocException If the index is out of bounds
-     */
-    public void markTaskDone(int taskNo) throws RetupmocException {
-        Task task = findTask(taskNo);
-        task.markAsDone();
-    }
-
-    /**
-     * Marks a task as not done.
-     *
-     * @param taskNo The index of the task in the list
-     * @throws RetupmocException If the index is out of bounds
-     */
-    public void markTaskNotDone(int taskNo) throws RetupmocException {
-        Task task = findTask(taskNo);
-        task.markAsNotDone();
-    }
-
-    /**
      * Returns a String representation of the task list.
      *
      * @return the String representation of the task list
@@ -140,7 +118,7 @@ public class TaskList {
     /**
      * Converts the String representation of a TaskList to the actual TaskList Object.
      *
-     * @param serialized tring representation of a TaskList
+     * @param serialized the String representation of a TaskList
      * @return the TaskList Object
      */
     public static TaskList deserialize(List<String> serialized) {

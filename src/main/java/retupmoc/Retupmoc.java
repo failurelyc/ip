@@ -59,50 +59,49 @@ public class Retupmoc {
      * @throws RetupmocException If an exception occurs when executing the command
      */
     private String runCommand(Command command) throws RetupmocException {
-        return switch (command.commandType) {
-        case "greet":
+        return switch (command.commandType()) {
+        case GREET:
             yield ui.printGreeting();
-        case "list":
+        case LIST:
             yield ui.displayList(list);
-        case "mark":
+        case MARK:
             assert !command.parameters.isEmpty();
             yield markTaskDone(Integer.parseInt(command.parameters.get(0)));
-        case "unmark":
+        case UNMARK:
             assert !command.parameters.isEmpty();
             yield markTaskNotDone(Integer.parseInt(command.parameters.get(0)));
-        case "bye":
+        case BYE:
             yield ui.printGoodbye();
-        case "todo":
+        case TODO:
             assert !command.parameters.isEmpty();
             yield addTask(new ToDo(command.parameters.get(0)));
-        case "deadline":
-            assert command.parameters.size() >= 2;
+        case DEADLINE:
             try {
-                yield addTask(new Deadline(command.parameters.get(0), command.parameters.get(1)));
+                yield addTask(new Deadline(command.parameters().get(0), command.parameters().get(1)));
             } catch (DateTimeParseException e) {
                 throw new RetupmocException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
             }
-        case "event":
+        case EVENT:
             assert command.parameters.size() >= 3;
             try {
                 yield addTask(
                         new Event(
-                                command.parameters.get(0),
-                                command.parameters.get(1),
-                                command.parameters.get(2)
+                                command.parameters().get(0),
+                                command.parameters().get(1),
+                                command.parameters().get(2)
                         )
                 );
             } catch (DateTimeParseException e) {
                 throw new RetupmocException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
             }
-        case "delete":
+        case DELETE:
             assert !command.parameters.isEmpty();
-            yield removeTask(Integer.parseInt(command.parameters.get(0)));
-        case "find":
+            yield removeTask(Integer.parseInt(command.parameters().get(0)));
+        case FIND:
             assert !command.parameters.isEmpty();
-            yield ui.displayList(list.findTasks(command.parameters.get(0)));
+            yield ui.displayList(list.findTasks(command.parameters().get(0)));
         default:
-            throw new RetupmocException("Unknown command: " + command.commandType);
+            throw new RetupmocException("Unknown command: " + command.commandType());
         };
     }
 

@@ -36,9 +36,9 @@ public class CommandParserTest {
         String input2 = "Unmark 2";
         String input3 = "Delete 3 blah blah blah";
 
-        assertEquals(List.of("0"), parser.parse(input).parameters);
-        assertEquals(List.of("1"), parser.parse(input2).parameters);
-        assertEquals(List.of("2"), parser.parse(input3).parameters);
+        assertEquals(List.of("0"), parser.parse(input).parameters());
+        assertEquals(List.of("1"), parser.parse(input2).parameters());
+        assertEquals(List.of("2"), parser.parse(input3).parameters());
 
     }
 
@@ -66,11 +66,11 @@ public class CommandParserTest {
         String input4 = "todo 12345 abc def ";
         String input5 = "todo abc /by 01/01/2025";
 
-        assertEquals(List.of("abc"), parser.parse(input).parameters);
-        assertEquals(List.of("todo"), parser.parse(input2).parameters);
-        assertEquals(List.of("abc def 12345"), parser.parse(input3).parameters);
-        assertEquals(List.of("12345 abc def"), parser.parse(input4).parameters);
-        assertEquals(List.of("abc /by 01/01/2025"), parser.parse(input5).parameters);
+        assertEquals(List.of("abc"), parser.parse(input).parameters());
+        assertEquals(List.of("todo"), parser.parse(input2).parameters());
+        assertEquals(List.of("abc def 12345"), parser.parse(input3).parameters());
+        assertEquals(List.of("12345 abc def"), parser.parse(input4).parameters());
+        assertEquals(List.of("abc /by 01/01/2025"), parser.parse(input5).parameters());
 
     }
 
@@ -101,11 +101,11 @@ public class CommandParserTest {
         String input4 = "deadline 12345 abc def /by today 1pm";
         String input5 = "deadline abc /by 01/01/2025 1300";
 
-        assertEquals(List.of("abc", "01/01/2025"), parser.parse(input).parameters);
-        assertEquals(List.of("deadline", "today"), parser.parse(input2).parameters);
-        assertEquals(List.of("abc def 12345", ""), parser.parse(input3).parameters);
-        assertEquals(List.of("12345 abc def", "today 1pm"), parser.parse(input4).parameters);
-        assertEquals(List.of("abc", "01/01/2025 1300"), parser.parse(input5).parameters);
+        assertEquals(List.of("abc", "01/01/2025"), parser.parse(input).parameters());
+        assertEquals(List.of("deadline", "today"), parser.parse(input2).parameters());
+        assertEquals(List.of("abc def 12345", ""), parser.parse(input3).parameters());
+        assertEquals(List.of("12345 abc def", "today 1pm"), parser.parse(input4).parameters());
+        assertEquals(List.of("abc", "01/01/2025 1300"), parser.parse(input5).parameters());
 
     }
 
@@ -136,11 +136,11 @@ public class CommandParserTest {
         String input4 = "event 12345 abc def /to 02/01/2025";
         String input5 = "event abc /from 01/01/2025 1300 /to 02/01/2025 0000";
 
-        assertEquals(List.of("abc", "01/01/2025", "02/01/2025"), parser.parse(input).parameters);
-        assertEquals(List.of("event", "01/01/2025", ""), parser.parse(input2).parameters);
-        assertEquals(List.of("abc def 12345", "", ""), parser.parse(input3).parameters);
-        assertEquals(List.of("12345 abc def", "", "02/01/2025"), parser.parse(input4).parameters);
-        assertEquals(List.of("abc", "01/01/2025 1300", "02/01/2025 0000"), parser.parse(input5).parameters);
+        assertEquals(List.of("abc", "01/01/2025", "02/01/2025"), parser.parse(input).parameters());
+        assertEquals(List.of("event", "01/01/2025", ""), parser.parse(input2).parameters());
+        assertEquals(List.of("abc def 12345", "", ""), parser.parse(input3).parameters());
+        assertEquals(List.of("12345 abc def", "", "02/01/2025"), parser.parse(input4).parameters());
+        assertEquals(List.of("abc", "01/01/2025 1300", "02/01/2025 0000"), parser.parse(input5).parameters());
 
     }
 

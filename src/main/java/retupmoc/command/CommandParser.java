@@ -2,7 +2,6 @@ package retupmoc.command;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 import retupmoc.RetupmocException;
 
@@ -10,24 +9,6 @@ import retupmoc.RetupmocException;
  * A parser that parses raw user input into the command type and parameters.
  */
 public class CommandParser {
-
-    private final Scanner s;
-
-    /**
-     * Constructs a new CommandParser with System.in as the input stream.
-     */
-    public CommandParser() {
-        s = new Scanner(System.in);
-    }
-
-    /**
-     * Obtains the next user input.
-     *
-     * @return the user input
-     */
-    public String getUserInput() {
-        return s.nextLine();
-    }
 
     /**
      * Parses the raw user input into a command.
@@ -38,20 +19,25 @@ public class CommandParser {
      */
     public Command parse(String input) throws RetupmocException {
         String[] tokens = input.trim().split("\\s+");
-        String commandType = tokens[0].toLowerCase();
-        return switch (commandType) {
-            case "mark", "unmark", "delete":
+        String commandTypeString = tokens[0];
+        try {
+            CommandType commandType = CommandType.valueOf(commandTypeString.toUpperCase());
+            return switch (commandType) {
+            case MARK, UNMARK, DELETE:
                 yield new Command(commandType, parseParamsForFindTask(tokens));
-            case "todo", "find":
+            case TODO, FIND:
                 yield new Command(commandType, parseParamsForToDoTask(tokens));
-            case "deadline":
+            case DEADLINE:
                 yield new Command(commandType, parseParamsForDeadlineTask(tokens));
-            case "event":
+            case EVENT:
                 yield new Command(commandType, parseParamsForEventTask(tokens));
             default:
                 yield new Command(commandType, List.of());
 
-        };
+            };
+        } catch (IllegalArgumentException e) {
+            throw new RetupmocException("Unknown command: " + commandTypeString);
+        }
     }
 
     /**
