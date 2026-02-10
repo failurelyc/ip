@@ -4,6 +4,7 @@ import java.time.format.DateTimeParseException;
 
 import retupmoc.command.Command;
 import retupmoc.command.CommandParser;
+import retupmoc.command.CommandType;
 import retupmoc.storage.ListFile;
 import retupmoc.storage.TaskList;
 import retupmoc.tasks.Deadline;
@@ -60,25 +61,25 @@ public class Retupmoc {
      */
     private String runCommand(Command command) throws RetupmocException {
         return switch (command.commandType) {
-        case "greet":
+        case GREET:
             yield ui.printGreeting();
-        case "list":
+        case LIST:
             yield ui.displayList(list);
-        case "mark":
+        case MARK:
             yield markTaskDone(Integer.parseInt(command.parameters.get(0)));
-        case "unmark":
+        case UNMARK:
             yield markTaskNotDone(Integer.parseInt(command.parameters.get(0)));
-        case "bye":
+        case BYE:
             yield ui.printGoodbye();
-        case "todo":
+        case TODO:
             yield addTask(new ToDo(command.parameters.get(0)));
-        case "deadline":
+        case DEADLINE:
             try {
                 yield addTask(new Deadline(command.parameters.get(0), command.parameters.get(1)));
             } catch (DateTimeParseException e) {
                 throw new RetupmocException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
             }
-        case "event":
+        case EVENT:
             try {
                 yield addTask(
                         new Event(
@@ -90,9 +91,9 @@ public class Retupmoc {
             } catch (DateTimeParseException e) {
                 throw new RetupmocException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
             }
-        case "delete":
+        case DELETE:
             yield removeTask(Integer.parseInt(command.parameters.get(0)));
-        case "find":
+        case FIND:
             yield ui.displayList(list.findTasks(command.parameters.get(0)));
         default:
             throw new RetupmocException("Unknown command: " + command.commandType);

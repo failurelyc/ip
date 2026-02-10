@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class Command {
 
-    public final String commandType;
+    public final CommandType commandType;
     public final List<String> parameters;
 
     /**
@@ -16,7 +16,7 @@ public class Command {
      * @param commandType the type of command
      * @param parameters the parameters for this command as a list of Strings
      */
-    public Command(String commandType, List<String> parameters) {
+    public Command(CommandType commandType, List<String> parameters) {
         this.commandType = commandType;
         this.parameters = parameters;
     }
