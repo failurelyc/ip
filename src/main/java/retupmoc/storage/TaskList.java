@@ -3,7 +3,7 @@ package retupmoc.storage;
 import java.util.ArrayList;
 import java.util.List;
 
-import retupmoc.RetupmocException;
+import retupmoc.JavanMynaException;
 import retupmoc.tasks.Task;
 
 /**
@@ -42,13 +42,13 @@ public class TaskList {
      * Returns the task with the specified index.
      * @param taskNo The index
      * @return The task with that index
-     * @throws RetupmocException If the index is out of bounds
+     * @throws JavanMynaException If the index is out of bounds
      */
-    public Task findTask(int taskNo) throws RetupmocException {
+    public Task findTask(int taskNo) throws JavanMynaException {
         try {
             return list.get(taskNo);
         } catch (IndexOutOfBoundsException e) {
-            throw new RetupmocException("Task not found");
+            throw new JavanMynaException("Task not found");
         }
     }
 
@@ -71,13 +71,13 @@ public class TaskList {
      *
      * @param taskNo The index of the task in the list
      * @return The removed task
-     * @throws RetupmocException If the index is out of bounds
+     * @throws JavanMynaException If the index is out of bounds
      */
-    public Task removeTask(int taskNo) throws RetupmocException {
+    public Task removeTask(int taskNo) throws JavanMynaException {
         try {
             return list.remove(taskNo);
         } catch (IndexOutOfBoundsException e) {
-            throw new RetupmocException("Task not found");
+            throw new JavanMynaException("Task not found");
         }
     }
 
@@ -107,7 +107,7 @@ public class TaskList {
     }
 
     /**
-     * Get the number of tasks in the TaskList.
+     * Gets the number of tasks in the TaskList.
      *
      * @return the number of tasks
      */

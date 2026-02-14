@@ -9,10 +9,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import retupmoc.Retupmoc;
+import retupmoc.JavanMyna;
 
 /**
  * Controller for the main GUI.
+ * Adapted from <a href="https://se-education.org/guides/tutorials/javaFxPart4.html">
+ *     JavaFX tutorial part 4 – Using FXML</a>
  */
 public class MainWindow extends AnchorPane {
     @FXML
@@ -24,10 +26,12 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
 
-    private Retupmoc chatbot;
+    private JavanMyna chatbot;
 
+    /* Image reused from https://ebird.org/species/commyn */
     private final Image userImage =
             new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/images/901.jpg")));
+    /* Image reused from https://ebird.org/species/whvmyn */
     private final Image retupmocImage =
             new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/images/900.jpg")));
 
@@ -37,7 +41,7 @@ public class MainWindow extends AnchorPane {
     }
 
     /** Injects the chatbot instance */
-    public void setChatbot(Retupmoc d) {
+    public void setChatbot(JavanMyna d) {
         chatbot = d;
         dialogContainer.getChildren().addAll(
                 DialogBox.getRetupmocDialog(chatbot.run("greet"), retupmocImage)
@@ -45,8 +49,8 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
-     * the dialog container. Clears the user input after processing.
+     * Creates two dialog boxes, one echoing user input and the other containing the reply
+     * and then appends them to the dialog container. Clears the user input after processing.
      */
     @FXML
     private void handleUserInput() {

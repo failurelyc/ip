@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import retupmoc.RetupmocException;
+import retupmoc.JavanMynaException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -19,9 +19,9 @@ public class CommandParserTest {
         String input2 = "Unmark hi";
         String input3 = "Delete hi";
 
-        RetupmocException exception = assertThrows(RetupmocException.class, () -> parser.parse(input));
-        RetupmocException exception2 = assertThrows(RetupmocException.class, () -> parser.parse(input2));
-        RetupmocException exception3 = assertThrows(RetupmocException.class, () -> parser.parse(input3));
+        JavanMynaException exception = assertThrows(JavanMynaException.class, () -> parser.parse(input));
+        JavanMynaException exception2 = assertThrows(JavanMynaException.class, () -> parser.parse(input2));
+        JavanMynaException exception3 = assertThrows(JavanMynaException.class, () -> parser.parse(input3));
         assertEquals("Invalid task number", exception.getMessage());
         assertEquals("Invalid task number", exception2.getMessage());
         assertEquals("Invalid task number", exception3.getMessage());
@@ -29,7 +29,7 @@ public class CommandParserTest {
     }
 
     @Test
-    public void parseParamsForFindTask_validNumber_correctParams() throws RetupmocException {
+    public void parseParamsForFindTask_validNumber_correctParams() throws JavanMynaException {
 
         CommandParser parser = new CommandParser();
         String input = "Mark 1";
@@ -49,15 +49,15 @@ public class CommandParserTest {
         String input = "todo";
         String input2 = "todo ";
 
-        RetupmocException exception = assertThrows(RetupmocException.class, () -> parser.parse(input));
-        RetupmocException exception2 = assertThrows(RetupmocException.class, () -> parser.parse(input2));
+        JavanMynaException exception = assertThrows(JavanMynaException.class, () -> parser.parse(input));
+        JavanMynaException exception2 = assertThrows(JavanMynaException.class, () -> parser.parse(input2));
         assertEquals("The description of a Task cannot be empty", exception.getMessage());
         assertEquals("The description of a Task cannot be empty", exception2.getMessage());
 
     }
 
     @Test
-    public void parseParamsForToDoTask_haveDescription_correctParams() throws RetupmocException {
+    public void parseParamsForToDoTask_haveDescription_correctParams() throws JavanMynaException {
 
         CommandParser parser = new CommandParser();
         String input = "todo abc";
@@ -82,9 +82,9 @@ public class CommandParserTest {
         String input2 = "deadline ";
         String input3 = "deadline /by 01/01/2026 1300";
 
-        RetupmocException exception = assertThrows(RetupmocException.class, () -> parser.parse(input));
-        RetupmocException exception2 = assertThrows(RetupmocException.class, () -> parser.parse(input2));
-        RetupmocException exception3 = assertThrows(RetupmocException.class, () -> parser.parse(input3));
+        JavanMynaException exception = assertThrows(JavanMynaException.class, () -> parser.parse(input));
+        JavanMynaException exception2 = assertThrows(JavanMynaException.class, () -> parser.parse(input2));
+        JavanMynaException exception3 = assertThrows(JavanMynaException.class, () -> parser.parse(input3));
         assertEquals("The description of a Task cannot be empty", exception.getMessage());
         assertEquals("The description of a Task cannot be empty", exception2.getMessage());
         assertEquals("The description of a Task cannot be empty", exception3.getMessage());
@@ -92,7 +92,7 @@ public class CommandParserTest {
     }
 
     @Test
-    public void parseParamsForDeadlineTask_haveDescription_correctParams() throws RetupmocException {
+    public void parseParamsForDeadlineTask_haveDescription_correctParams() throws JavanMynaException {
 
         CommandParser parser = new CommandParser();
         String input = "deadline abc /by 01/01/2025";
@@ -117,9 +117,9 @@ public class CommandParserTest {
         String input2 = "event ";
         String input3 = "event /from 01/01/2026 /to 02/01/2026";
 
-        RetupmocException exception = assertThrows(RetupmocException.class, () -> parser.parse(input));
-        RetupmocException exception2 = assertThrows(RetupmocException.class, () -> parser.parse(input2));
-        RetupmocException exception3 = assertThrows(RetupmocException.class, () -> parser.parse(input3));
+        JavanMynaException exception = assertThrows(JavanMynaException.class, () -> parser.parse(input));
+        JavanMynaException exception2 = assertThrows(JavanMynaException.class, () -> parser.parse(input2));
+        JavanMynaException exception3 = assertThrows(JavanMynaException.class, () -> parser.parse(input3));
         assertEquals("The description of a Task cannot be empty", exception.getMessage());
         assertEquals("The description of a Task cannot be empty", exception2.getMessage());
         assertEquals("The description of a Task cannot be empty", exception3.getMessage());
@@ -127,7 +127,7 @@ public class CommandParserTest {
     }
 
     @Test
-    public void parseParamsForEventTask_haveDescription_correctParams() throws RetupmocException {
+    public void parseParamsForEventTask_haveDescription_correctParams() throws JavanMynaException {
 
         CommandParser parser = new CommandParser();
         String input = "event abc /from 01/01/2025 /to 02/01/2025";

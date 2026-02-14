@@ -16,7 +16,7 @@ import retupmoc.ui.Ui;
 /**
  * The main class of this application.
  */
-public class Retupmoc {
+public class JavanMyna {
 
     private final TaskList list;
     private final ListFile file;
@@ -28,7 +28,7 @@ public class Retupmoc {
      *
      * @param fileLocation The path to the saved data
      */
-    public Retupmoc(String fileLocation) {
+    public JavanMyna(String fileLocation) {
         parser = new CommandParser();
         file = new ListFile(fileLocation);
         list = TaskList.deserialize(file.readList());
@@ -46,7 +46,7 @@ public class Retupmoc {
         try {
             Command command = parser.parse(input);
             return runCommand(command);
-        } catch (RetupmocException e) {
+        } catch (JavanMynaException e) {
             return ui.printErrorMessage(e);
         }
 
@@ -57,9 +57,9 @@ public class Retupmoc {
      *
      * @param command The parsed command
      * @return the chatbot output
-     * @throws RetupmocException If an exception occurs when executing the command
+     * @throws JavanMynaException If an exception occurs when executing the command
      */
-    private String runCommand(Command command) throws RetupmocException {
+    private String runCommand(Command command) throws JavanMynaException {
         return switch (command.commandType()) {
         case GREET:
             yield ui.printGreeting();
@@ -81,7 +81,7 @@ public class Retupmoc {
             try {
                 yield addTask(new Deadline(command.parameters().get(0), command.parameters().get(1)));
             } catch (DateTimeParseException e) {
-                throw new RetupmocException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
+                throw new JavanMynaException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
             }
         case EVENT:
             assert command.parameters().size() >= 3;
@@ -94,7 +94,7 @@ public class Retupmoc {
                         )
                 );
             } catch (DateTimeParseException e) {
-                throw new RetupmocException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
+                throw new JavanMynaException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
             }
         case DELETE:
             assert !command.parameters().isEmpty();
@@ -107,10 +107,10 @@ public class Retupmoc {
             try {
                 yield "Usage: " + CommandType.valueOf(command.parameters().get(0)).getFormat();
             } catch (IllegalArgumentException e) {
-                throw new RetupmocException("That is not a valid command.");
+                throw new JavanMynaException("That is not a valid command.");
             }
         default:
-            throw new RetupmocException("Unknown command: " + command.commandType());
+            throw new JavanMynaException("Unknown command: " + command.commandType());
         };
     }
 
@@ -119,15 +119,15 @@ public class Retupmoc {
      *
      * @param taskNo The index of the task in the list
      * @return the chatbot output
-     * @throws RetupmocException If the task is not found
+     * @throws JavanMynaException If the task is not found
      */
-    private String removeTask(int taskNo) throws RetupmocException {
+    private String removeTask(int taskNo) throws JavanMynaException {
         try {
             Task task = list.removeTask(taskNo);
             file.writeList(list.serialize());
             return ui.printTaskRemovalSuccess(task) + "\n" + ui.printNoOfTask(list);
         } catch (IndexOutOfBoundsException e) {
-            throw new RetupmocException("Task not found");
+            throw new JavanMynaException("Task not found");
         }
     }
 
@@ -136,9 +136,9 @@ public class Retupmoc {
      *
      * @param taskNo The index of the task in the list
      * @return the chatbot output
-     * @throws RetupmocException If the task is not found
+     * @throws JavanMynaException If the task is not found
      */
-    private String markTaskDone(int taskNo) throws RetupmocException {
+    private String markTaskDone(int taskNo) throws JavanMynaException {
         Task task = list.findTask(taskNo);
         task.markAsDone();
         file.writeList(list.serialize());
@@ -150,9 +150,9 @@ public class Retupmoc {
      *
      * @param taskNo The index of the task in the list
      * @return the chatbot output
-     * @throws RetupmocException If the task is not found
+     * @throws JavanMynaException If the task is not found
      */
-    private String markTaskNotDone(int taskNo) throws RetupmocException {
+    private String markTaskNotDone(int taskNo) throws JavanMynaException {
         Task task = list.findTask(taskNo);
         task.markAsNotDone();
         file.writeList(list.serialize());

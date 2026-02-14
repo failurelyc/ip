@@ -1,6 +1,6 @@
 package retupmoc.ui;
 
-import retupmoc.RetupmocException;
+import retupmoc.JavanMynaException;
 import retupmoc.storage.TaskList;
 import retupmoc.tasks.Task;
 
@@ -35,7 +35,7 @@ public class Ui {
      * Returns the error message. Should be called if an Exception is thrown.
      * @param e The exception
      */
-    public String printErrorMessage(RetupmocException e) {
+    public String printErrorMessage(JavanMynaException e) {
         return e.getMessage();
     }
 

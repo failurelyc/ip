@@ -7,14 +7,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import retupmoc.Retupmoc;
+import retupmoc.JavanMyna;
 
 /**
  * A GUI for ChatBot using FXML.
+ * Reused from <a href="https://se-education.org/guides/tutorials/javaFxPart4.html">
+ *     JavaFX tutorial part 4 – Using FXML</a>
  */
 public class Main extends Application {
 
-    private final Retupmoc chatbot = new Retupmoc("./saved_data");
+    private final JavanMyna chatbot = new JavanMyna("./saved_data");
 
     @Override
     public void start(Stage stage) {

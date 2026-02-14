@@ -42,7 +42,7 @@ public abstract class Task {
     }
 
     /**
-     * Check if this task description contains the partial description provided.
+     * Checks if this task description contains the partial description provided.
      * Case is ignored.
      *
      * @param partialDescription the partial description

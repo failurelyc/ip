@@ -3,7 +3,7 @@ package retupmoc.command;
 import java.util.Arrays;
 import java.util.List;
 
-import retupmoc.RetupmocException;
+import retupmoc.JavanMynaException;
 
 /**
  * A parser that parses raw user input into the command type and parameters.
@@ -15,9 +15,9 @@ public class CommandParser {
      *
      * @param input the user input
      * @return the parsed command
-     * @throws RetupmocException if the user input is invalid
+     * @throws JavanMynaException if the user input is invalid
      */
-    public Command parse(String input) throws RetupmocException {
+    public Command parse(String input) throws JavanMynaException {
         String[] tokens = input.trim().split("\\s+");
         String commandTypeString = tokens[0];
         try {
@@ -38,7 +38,7 @@ public class CommandParser {
 
             };
         } catch (IllegalArgumentException e) {
-            throw new RetupmocException("Unknown command: " + commandTypeString);
+            throw new JavanMynaException("Unknown command: " + commandTypeString);
         }
     }
 
@@ -55,15 +55,15 @@ public class CommandParser {
      *
      * @param tokens each word in the user input
      * @return the parsed command
-     * @throws RetupmocException if the task number in the user input is invalid
+     * @throws JavanMynaException if the task number in the user input is invalid
      */
-    private static List<String> parseParamsForFindTask(String ... tokens) throws RetupmocException {
+    private static List<String> parseParamsForFindTask(String ... tokens) throws JavanMynaException {
         try {
             return List.of(String.valueOf(Integer.parseInt(tokens[1]) - 1));
         } catch (NumberFormatException e) {
-            throw new RetupmocException("Invalid task number");
+            throw new JavanMynaException("Invalid task number");
         } catch (IndexOutOfBoundsException e) {
-            throw new RetupmocException("No task specified");
+            throw new JavanMynaException("No task specified");
         }
     }
 
@@ -73,10 +73,10 @@ public class CommandParser {
      * @param tokens each word in the user input
      * @return the parsed command
      */
-    private static List<String> parseParamsForToDoTask(String ... tokens) throws RetupmocException {
+    private static List<String> parseParamsForToDoTask(String ... tokens) throws JavanMynaException {
         String description = String.join(" ", Arrays.stream(tokens).skip(1).toList());
         if (description.isEmpty()) {
-            throw new RetupmocException("The description of a Task cannot be empty");
+            throw new JavanMynaException("The description of a Task cannot be empty");
         }
         return List.of(description);
     }
@@ -86,9 +86,9 @@ public class CommandParser {
      *
      * @param tokens each word in the user input
      * @return the parsed command
-     * @throws RetupmocException if the task description in the user input is empty
+     * @throws JavanMynaException if the task description in the user input is empty
      */
-    private static List<String> parseParamsForDeadlineTask(String ... tokens) throws RetupmocException {
+    private static List<String> parseParamsForDeadlineTask(String ... tokens) throws JavanMynaException {
         String description = String
                 .join(
                         " ",
@@ -105,7 +105,7 @@ public class CommandParser {
                                 .toList()
                 );
         if (description.isEmpty()) {
-            throw new RetupmocException("The description of a Task cannot be empty");
+            throw new JavanMynaException("The description of a Task cannot be empty");
         } else {
             return List.of(description, by);
         }
@@ -117,9 +117,9 @@ public class CommandParser {
      *
      * @param tokens each word in the user input
      * @return the parsed command
-     * @throws RetupmocException if the task description in the user input is empty
+     * @throws JavanMynaException if the task description in the user input is empty
      */
-    private static List<String> parseParamsForEventTask(String ... tokens) throws RetupmocException {
+    private static List<String> parseParamsForEventTask(String ... tokens) throws JavanMynaException {
         String description = String
                 .join(
                         " ",
@@ -146,7 +146,7 @@ public class CommandParser {
                                 .toList()
                 );
         if (description.isEmpty()) {
-            throw new RetupmocException("The description of a Task cannot be empty");
+            throw new JavanMynaException("The description of a Task cannot be empty");
         } else {
             return List.of(description, start, end);
         }
