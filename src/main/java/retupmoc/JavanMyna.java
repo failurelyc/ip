@@ -15,6 +15,7 @@ import retupmoc.ui.Ui;
 
 /**
  * The main class of this application.
+ * ChatGPT was used to add personality to the Strings
  */
 public class JavanMyna {
 
@@ -81,7 +82,11 @@ public class JavanMyna {
             try {
                 yield addTask(new Deadline(command.parameters().get(0), command.parameters().get(1)));
             } catch (DateTimeParseException e) {
-                throw new JavanMynaException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
+                throw new JavanMynaException(
+                        "Hmm… that date doesn’t look quite right. 🧐\n"
+                                + "Please use this format: " + Deadline.INPUT_FORMAT
+                                + " (time is optional!)"
+                );
             }
         case EVENT:
             assert command.parameters().size() >= 3;
@@ -94,7 +99,11 @@ public class JavanMyna {
                         )
                 );
             } catch (DateTimeParseException e) {
-                throw new JavanMynaException("Date format should be " + Deadline.INPUT_FORMAT + ". Time is optional");
+                throw new JavanMynaException(
+                        "Hmm… that date doesn’t look quite right. 🧐\n"
+                                + "Please use this format: " + Deadline.INPUT_FORMAT
+                                + " (time is optional!)"
+                );
             }
         case DELETE:
             assert !command.parameters().isEmpty();
@@ -105,12 +114,20 @@ public class JavanMyna {
         case HELP:
             assert !command.parameters().isEmpty();
             try {
-                yield "Usage: " + CommandType.valueOf(command.parameters().get(0)).getFormat();
+                yield "Here’s how you can use that command:\n"
+                        + CommandType.valueOf(command.parameters().get(0)).getFormat();
             } catch (IllegalArgumentException e) {
-                throw new JavanMynaException("That is not a valid command.");
+                throw new JavanMynaException(
+                        "Hmm… I don’t recognise that command. 🤔\n"
+                                + "Try another one or check the spelling!"
+                );
             }
         default:
-            throw new JavanMynaException("Unknown command: " + command.commandType());
+            throw new JavanMynaException(
+                    "Yikes! I’ve never heard of the command \""
+                            + command.commandType() + "\" 😅\n"
+                            + "Maybe try \"help\" if you’re unsure?"
+            );
         };
     }
 
@@ -127,7 +144,10 @@ public class JavanMyna {
             file.writeList(list.serialize());
             return ui.printTaskRemovalSuccess(task) + "\n" + ui.printNoOfTask(list);
         } catch (IndexOutOfBoundsException e) {
-            throw new JavanMynaException("Task not found");
+            throw new JavanMynaException(
+                    "I couldn’t find that task number. 🔍\n"
+                            + "Are you sure it exists?"
+            );
         }
     }
 

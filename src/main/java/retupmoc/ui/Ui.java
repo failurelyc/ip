@@ -6,6 +6,7 @@ import retupmoc.tasks.Task;
 
 /**
  * This class generates the text to be displayed by the chatbot.
+ * ChatGPT was used to add personality to the Strings
  */
 public class Ui {
 
@@ -13,14 +14,14 @@ public class Ui {
      * Returns the greeting. Should be called at application startup.
      */
     public String printGreeting() {
-        return ("Hello! I'm Javan Myna!\nWhat can I do for you?");
+        return "Hey there! I'm Javan Myna, your trusty task assistant. 😊\nWhat can I help you with today?";
     }
 
     /**
      * Returns the goodbye message. Should be called before the application exits.
      */
     public String printGoodbye() {
-        return "Bye. Hope to see you again soon!";
+        return "Goodbye for now! I'll be here when you need me again. ✌️";
     }
 
     /**
@@ -28,7 +29,7 @@ public class Ui {
      * @param list the TaskList
      */
     public String displayList(TaskList list) {
-        return "Here are the tasks in your list:\n" + list;
+        return "Here’s what’s on your to-do list right now:\n" + list;
     }
 
     /**
@@ -36,7 +37,7 @@ public class Ui {
      * @param e The exception
      */
     public String printErrorMessage(JavanMynaException e) {
-        return e.getMessage();
+        return "Oops! Something went wrong: " + e.getMessage() + " 😬";
     }
 
     /**
@@ -44,40 +45,40 @@ public class Ui {
      * @param task The task that was added
      */
     public String printAddTaskSuccess(Task task) {
-        return "Got it. I've added this task:\n" + task;
+        return "Awesome! I've added this task to your list: 🎉\n" + task;
     }
 
     /**
      * Prints the message after a task is successfully removed.
-     * @param task The task that was added
+     * @param task The task that was removed
      */
     public String printTaskRemovalSuccess(Task task) {
-        return "Noted: I've removed this task:\n" + task;
+        return "Task removed! I’ve crossed this off your list: ✅\n" + task;
     }
 
     /**
      * Prints the message after a task is successfully marked as done.
-     * @param task The task that was added
+     * @param task The task that was marked as done
      */
     public String printMarkTaskDone(Task task) {
-        return "Nice! I've marked this task as done:\n" + task;
+        return "Yay, you did it! 🎯 This task is now marked as done:\n" + task;
     }
 
     /**
      * Prints the message after a task is successfully marked as not done.
-     * @param task The task that was added
+     * @param task The task that was marked as not done
      */
     public String printMarkTaskNotDone(Task task) {
-        return "OK, I've marked this task as not done yet:\n" + task;
+        return "No worries! This task is back on the to-do list: 🔄\n" + task;
     }
 
     /**
-     * Prints number of tasks in the task list.
+     * Prints the number of tasks in the task list.
      *
      * @param list the TaskList
      */
     public String printNoOfTask(TaskList list) {
-        return "Now you have " + list.getNoOfTasks() + " tasks in the list.";
+        return "You currently have " + list.getNoOfTasks()
+                + " task" + (list.getNoOfTasks() != 1 ? "s" : "") + " in your list!";
     }
-
 }
